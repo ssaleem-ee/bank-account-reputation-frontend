@@ -153,11 +153,11 @@ class BarsController @Inject()(
             Future.successful(BadRequest(validateView(formWithErrors)))
           },
           account => {
-            val validationFuture: Future[ValidationResult] = {
+            val validationFuture: Future[Either[ValidationErrorResult, ValidationResult]] = {
               if (!account.accountNumber.isEmpty) {
                 connector.validate(AccountDetails(Account(account.sortCode, account.accountNumber)))
               } else {
-                Future.successful(ValidationResult(false, "N/A", "N/A"))
+                Future.successful(Right(ValidationResult(false, "N/A", "N/A")))
               }
             }
 

@@ -131,6 +131,8 @@ case class ValidationResult(accountNumberWithSortCodeIsValid: Boolean,
                             directDebitInstructionsDisallowed: Option[String] = None,
                             iban: Option[String] = None)
 
+case class ValidationErrorResult(code: String, desc: String)
+
 case class Assessment(accountNumberWithSortCodeIsValid: Boolean,
                       accountExists: String,
                       nameMatches: String,
@@ -165,6 +167,10 @@ object Implicits {
   implicit val inputFormat = Json.format[Input]
 
   implicit val validationResultFormat = Json.format[ValidationResult]
+  implicit val rightValidationResultFormat = Json.format[Right[ValidationErrorResult, ValidationResult]]
+
+  implicit val validationErrorResultFormat = Json.format[ValidationErrorResult]
+  implicit val leftValidationErrorResultFormat = Json.format[Left[ValidationErrorResult, ValidationResult]]
 
   implicit val modcheckResultFormat = Json.format[ModCheckResult]
 

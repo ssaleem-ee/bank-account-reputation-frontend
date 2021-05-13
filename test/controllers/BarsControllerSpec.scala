@@ -122,6 +122,7 @@ class BarsControllerSpec extends PlaySpec with GuiceOneAppPerSuite with Injectin
         val result = validate(request)
 
         status(result) mustEqual OK
+
         contentAsString(result) must include("Validate Bank Details")
         contentAsString(result) must include("IBAN")
         contentAsString(result) must include("N/A")
